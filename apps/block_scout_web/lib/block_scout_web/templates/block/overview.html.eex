@@ -151,14 +151,66 @@
               </dd>
             </dl>
           <% end %>
+          <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+          <script>
+            const infuraurl = "https://seoul.worldland.foundation"
+            const web3 = new Web3(new Web3.providers.HttpProvider(infuraurl));
+            console.log(web3)
+            async function getBlockCodeword(blockNumber) {
+              const blockData = await web3.eth.getBlock(blockNumber);
+              const codeword = (parseInt(blockData.codeword, 16).toString(2)).substring(0, 66) + "...";
+              const difficulty = blockData.difficulty;
+              const codewordLength = blockData.codelength;
+              const decimalCodewordLength = parseInt(blockData.codelength, 16);
+              const printcodeworldlength = codewordLength + " / Decimal : " + decimalCodewordLength;
+              //const calculatedDifficulty = `${difficulty * 435 * decimalCodewordLength + 26020} FLOP`;
+              const calculatedDifficulty = difficulty * 435 * decimalCodewordLength + 26020;
+              const formattedDifficulty = calculatedDifficulty.toLocaleString() + " FLOP";
+              document.getElementById("block-codeword").innerText = codeword;
+              document.getElementById("block-codewordLength").innerText = printcodeworldlength;
+              document.getElementById("block-difficulty").innerText = formattedDifficulty;
+         }
+
+            window.addEventListener('load', function() {
+              const url = window.location.href;
+              const blockNumber = url.split('/').slice(-2, -1)[0];
+              getBlockCodeword(blockNumber);
+            });
+          </script>
+          <!-- Codeword -->
+          <dl class="row">
+            <dt class="col-sm-3 col-lg-2 text-muted">
+              <%= render BlockScoutWeb.CommonComponentsView, "_i_tooltip_2.html",
+              text: gettext("Validated solution to the cryptopuzzle for this block.") %>
+              <%= gettext("Codeword") %>
+            </dt>
+            <dd class="col-sm-9 col-lg-10">
+              <span id="block-codeword" data-from-now=""></span>
+            </dd>
+          </dl> 
+          <!-- CodewordLength -->
+          <dl class="row">
+            <dt class="col-sm-3 col-lg-2 text-muted">
+              <%= render BlockScoutWeb.CommonComponentsView, "_i_tooltip_2.html",
+              text: gettext("Length of the validated solution.") %>
+              <%= gettext("Codeword Length") %>
+            </dt>
+            <dd class="col-sm-9 col-lg-10">
+              <span id="block-codewordLength" data-from-now=""></span>
+            </dd>
+          </dl> 
           <!-- Difficulty -->
           <dl class="row">
             <dt class="col-sm-3 col-lg-2 text-muted">
               <%= render BlockScoutWeb.CommonComponentsView, "_i_tooltip_2.html",
-              text: gettext("Block difficulty for miner, used to calibrate block generation time (Note: constant in POA based networks).") %>
+              text: gettext("expected number of decodings/operations to hit the right answer.") %>
               <%= gettext("Difficulty") %>
             </dt>
-            <dd class="col-sm-9 col-lg-10"><%= @block.difficulty |> Decimal.to_integer() |> BlockScoutWeb.Cldr.Number.to_string! %></dd>
+            <dd class="col-sm-9 col-lg-10">
+              <%= (@block.difficulty |> Decimal.to_integer() |> BlockScoutWeb.Cldr.Number.to_string!) <> " decodings / " %>
+              <span id="block-difficulty"></span>
+            </dd>
+            <!-- <dd class="col-sm-9 col-lg-10"><%= @block.difficulty |> Decimal.to_integer() |> BlockScoutWeb.Cldr.Number.to_string! %></dd> -->
           </dl>
           <%= if block_type(@block) == "Block" do %>
             <!-- Total Difficulty -->
@@ -168,7 +220,9 @@
                 text: gettext("Total difficulty of the chain until this block.") %>
                 <%= gettext("Total Difficulty") %>
               </dt>
-              <dd class="col-sm-9 col-lg-10"><%= @block.total_difficulty |> Decimal.to_integer() |> BlockScoutWeb.Cldr.Number.to_string! %></dd>
+              <dd class="col-sm-9 col-lg-10">
+                <%= (@block.total_difficulty |> Decimal.to_integer() |> BlockScoutWeb.Cldr.Number.to_string!) <> " decodings " %>
+              </dd>
             </dl>
             <!-- Gas Used -->
             <dl class="row">
