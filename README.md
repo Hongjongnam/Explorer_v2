@@ -26,13 +26,7 @@ BlockScout currently supports several hundred chains and rollups throughout the 
 
 ## Getting Started
 
-See the [project documentation](https://docs.blockscout.com/) for instructions:
-
-- [Requirements](https://docs.blockscout.com/for-developers/information-and-settings/requirements)
-- [Ansible deployment](https://docs.blockscout.com/for-developers/ansible-deployment)
-- [Manual deployment](https://docs.blockscout.com/for-developers/manual-deployment)
-- [ENV variables](https://docs.blockscout.com/for-developers/information-and-settings/env-variables)
-- [Configuration options](https://docs.blockscout.com/for-developers/configuration-options)
+- [Manual deployment](https://jongs2741.tistory.com/77)
 
 ## Acknowledgements
 
