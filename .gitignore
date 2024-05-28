@@ -60,3 +60,6 @@ dump.rdb
 .vscode
 
 **.dec**
+
+# Environment variable files
+.env
