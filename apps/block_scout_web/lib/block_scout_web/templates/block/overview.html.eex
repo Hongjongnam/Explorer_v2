@@ -164,7 +164,7 @@
               const decimalCodewordLength = parseInt(blockData.codelength, 16);
               const printcodeworldlength = codewordLength + " / Decimal : " + decimalCodewordLength;
               //const calculatedDifficulty = `${difficulty * 435 * decimalCodewordLength + 26020} FLOP`;
-              const calculatedDifficulty = difficulty * 435 * decimalCodewordLength + 26020;
+              const calculatedDifficulty = difficulty * (435 * decimalCodewordLength + 26020);
               const formattedDifficulty = calculatedDifficulty.toLocaleString() + " FLOP";
               document.getElementById("block-codeword").innerText = codeword;
               document.getElementById("block-codewordLength").innerText = printcodeworldlength;
