@@ -30,7 +30,7 @@ module.exports = {
         ECTO_USE_SSL: "false",
         DISABLE_EXCHANGE_RATES: "true",
         INDEXER_DISABLE_BLOCK_REWARD_FETCHER: "false",
-        LOGGER_LEVEL: "",
+        LOGGER_LEVEL: "error",
         SUPPORTED_CHAINS: '[ { "title": "Worldland Seoul", "url": "http://scan.worldland.foundation/" }, { "title": "Worldland Gwangju", "url": "https://testscan.worldland.foundation", "test_net?": true } ]'
       }
     }
